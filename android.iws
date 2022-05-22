@@ -13,6 +13,14 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/frameworks/native" />
   </component>
+  <component name="GitSEFilterConfiguration">
+    <file-type-list>
+      <filtered-out-file-type name="LOCAL_BRANCH" />
+      <filtered-out-file-type name="REMOTE_BRANCH" />
+      <filtered-out-file-type name="TAG" />
+      <filtered-out-file-type name="COMMIT_BY_MESSAGE" />
+    </file-type-list>
+  </component>
   <component name="ProjectId" id="1sQXQlovSziCZXfulwGD7o9eOf1" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
@@ -22,11 +30,14 @@
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="RunOnceActivity.cidr.known.project.marker" value="true" />
+    <property name="cidr.known.project.marker" value="true" />
     <property name="dart.analysis.tool.window.visible" value="false" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/android.ipr" />
     <property name="project.structure.last.edited" value="Project" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
+    <property name="settings.editor.selected.configurable" value="project.propVCSSupport.Mappings" />
     <property name="show.migrate.to.gradle.popup" value="false" />
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
@@ -42,25 +53,5 @@
       <updated>1620805772828</updated>
     </task>
     <servers />
-  </component>
-  <component name="WindowStateProjectService">
-    <state x="597" y="399" key="DetectedRootsChooserDialog" timestamp="1620818039887">
-      <screen x="0" y="0" width="1680" height="1050" />
-    </state>
-    <state x="597" y="399" key="DetectedRootsChooserDialog/0.0.1680.1050@0.0.1680.1050" timestamp="1620818039887" />
-    <state x="328" y="103" key="SettingsEditor" timestamp="1622954519141">
-      <screen x="0" y="0" width="1680" height="1050" />
-    </state>
-    <state x="328" y="103" key="SettingsEditor/0.0.1680.1050@0.0.1680.1050" timestamp="1622954519141" />
-    <state x="328" y="117" key="SettingsEditor/0.25.1680.940@0.25.1680.940" timestamp="1621823382760" />
-    <state x="570" y="230" width="576" height="586" key="StructurePopup" timestamp="1622799529319">
-      <screen x="0" y="0" width="1680" height="1050" />
-    </state>
-    <state x="570" y="230" width="576" height="586" key="StructurePopup/0.0.1680.1050@0.0.1680.1050" timestamp="1622799529319" />
-    <state x="570" y="231" width="576" height="524" key="StructurePopup/0.25.1680.940@0.25.1680.940" timestamp="1621825223382" />
-    <state x="505" y="233" width="670" height="676" key="search.everywhere.popup" timestamp="1622799522114">
-      <screen x="0" y="0" width="1680" height="1050" />
-    </state>
-    <state x="505" y="233" width="670" height="676" key="search.everywhere.popup/0.0.1680.1050@0.0.1680.1050" timestamp="1622799522114" />
   </component>
 </project>
