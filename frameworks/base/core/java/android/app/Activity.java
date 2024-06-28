@@ -5204,6 +5204,7 @@ public class Activity extends ContextThemeWrapper
     public void startActivityForResult(@RequiresPermission Intent intent, int requestCode,
                                        @Nullable Bundle options) {
         if (mParent == null) {
+            //todo-->to next level(execStartActivity)
             options = transferSpringboardActivityOptions(options);
             Instrumentation.ActivityResult ar =
                     mInstrumentation.execStartActivity(
@@ -5502,6 +5503,8 @@ public class Activity extends ContextThemeWrapper
      */
     @Override
     public void startActivity(Intent intent) {
+        //从最常见的startActivity作为介入的入口开始查看启动Activity的流程
+        //todo-->to next level
         this.startActivity(intent, null);
     }
 
@@ -5528,10 +5531,12 @@ public class Activity extends ContextThemeWrapper
     @Override
     public void startActivity(Intent intent, @Nullable Bundle options) {
         if (options != null) {
+            //todo-->to next level
             startActivityForResult(intent, -1, options);
         } else {
             // Note we want to go through this call for compatibility with
             // applications that may have overridden the method.
+            // 发现下一层级还是在调用 startActivityForResult(intent, requestCode, null);
             startActivityForResult(intent, -1);
         }
     }
@@ -7701,9 +7706,11 @@ public class Activity extends ContextThemeWrapper
         attachBaseContext(context);
 
         mFragments.attachHost(null /*parent*/);
-
-        mWindow = new PhoneWindow(this, window, activityConfigCallback);
+        //TODO: 这里可以用于解答：Activity和window产生关联的位置
+        // 1.创建了PhoneWindow对象，在Activity中持有了Window。
+        mWindow = new PhoneWindow(this, window, activityConfigCallback);//跟进window的实例化去看一看
         mWindow.setWindowControllerCallback(this);
+        // 2.将 Activity 作为参数传递给 Window，所以在 Window 中持有了 Activity 。
         mWindow.setCallback(this);
         mWindow.setOnWindowDismissedCallback(this);
         mWindow.getLayoutInflater().setPrivateFactory(this);
@@ -7712,7 +7719,7 @@ public class Activity extends ContextThemeWrapper
         }
         if (info.uiOptions != 0) {
             mWindow.setUiOptions(info.uiOptions);
-        }
+
         mUiThread = Thread.currentThread();
 
         mMainThread = aThread;
@@ -7737,7 +7744,7 @@ public class Activity extends ContextThemeWrapper
                         Looper.myLooper());
             }
         }
-
+        // 3.设置 WindowManager，来关联 Window 和 DecorView。
         mWindow.setWindowManager(
                 (WindowManager) context.getSystemService(Context.WINDOW_SERVICE),
                 mToken, mComponent.flattenToString(),
@@ -7745,6 +7752,7 @@ public class Activity extends ContextThemeWrapper
         if (mParent != null) {
             mWindow.setContainer(mParent.getWindow());
         }
+        //Activity持有WindowManage
         mWindowManager = mWindow.getWindowManager();
         mCurrentConfig = config;
 

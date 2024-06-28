@@ -509,10 +509,11 @@ class ActivityStarter {
      * @return The starter result.
      */
     int execute() {
+        //todo-->to next level
         try {
             // TODO(b/64750076): Look into passing request directly to these methods to allow
             // for transactional diffs and preprocessing.
-            if (mRequest.mayWait) {
+            if (mRequest.mayWait) {//由于前面设置了 mayWait = true,故执行此处
                 return startActivityMayWait(mRequest.caller, mRequest.callingUid,
                         mRequest.callingPackage, mRequest.realCallingPid, mRequest.realCallingUid,
                         mRequest.intent, mRequest.resolvedType,
@@ -565,6 +566,7 @@ class ActivityStarter {
         }
     }
 
+    //todo-->to next level
     private int startActivity(IApplicationThread caller, Intent intent, Intent ephemeralIntent,
             String resolvedType, ActivityInfo aInfo, ResolveInfo rInfo,
             IVoiceInteractionSession voiceSession, IVoiceInteractor voiceInteractor,
@@ -609,7 +611,7 @@ class ActivityStarter {
     private void onExecutionComplete() {
         mController.onExecutionComplete(this);
     }
-
+    //todo-->to next level
     private int startActivity(IApplicationThread caller, Intent intent, Intent ephemeralIntent,
             String resolvedType, ActivityInfo aInfo, ResolveInfo rInfo,
             IVoiceInteractionSession voiceSession, IVoiceInteractor voiceInteractor,
@@ -1140,7 +1142,7 @@ class ActivityStarter {
             }
         }
     }
-
+    //todo-->to next level
     private int startActivityMayWait(IApplicationThread caller, int callingUid,
             String callingPackage, int requestRealCallingPid, int requestRealCallingUid,
             Intent intent, String resolvedType, IVoiceInteractionSession voiceSession,
@@ -1150,7 +1152,7 @@ class ActivityStarter {
             int userId, TaskRecord inTask, String reason,
             boolean allowPendingRemoteAnimationRegistryLookup,
             PendingIntentRecord originatingPendingIntent, boolean allowBackgroundActivityStart) {
-        // Refuse possible leaked file descriptors
+        // Refuse possible leaked file descriptors(拒绝可能泄露的文件描述符)
         if (intent != null && intent.hasFileDescriptors()) {
             throw new IllegalArgumentException("File descriptors passed in Intent");
         }
@@ -1295,6 +1297,7 @@ class ActivityStarter {
             }
 
             final ActivityRecord[] outRecord = new ActivityRecord[1];
+            //todo-->to next level
             int res = startActivity(caller, intent, ephemeralIntent, resolvedType, aInfo, rInfo,
                     voiceSession, voiceInteractor, resultTo, resultWho, requestCode, callingPid,
                     callingUid, callingPackage, realCallingPid, realCallingUid, startFlags, options,

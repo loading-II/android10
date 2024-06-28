@@ -325,6 +325,7 @@ public class PhoneWindow extends Window implements MenuBuilder.Callback {
 
     /**
      * Constructor for main window of an activity.
+     * window 的构造器
      */
     public PhoneWindow(Context context, Window preservedWindow,
             ActivityConfigCallback activityConfigCallback) {
@@ -2329,7 +2330,7 @@ public class PhoneWindow extends Window implements MenuBuilder.Callback {
             }
         } else {
             context = getContext();
-        }
+        }//DecorView的实质是一个FrameLayout
         return new DecorView(context, featureId, this, getAttributes());
     }
 
@@ -2688,6 +2689,7 @@ public class PhoneWindow extends Window implements MenuBuilder.Callback {
                 mDecor.postOnAnimation(mInvalidatePanelMenuRunnable);
             }
         } else {
+            //使window 和 decor产生关联
             mDecor.setWindow(this);
         }
         if (mContentParent == null) {

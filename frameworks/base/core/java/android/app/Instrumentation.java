@@ -1655,6 +1655,7 @@ public class Instrumentation {
      * @see Activity#startActivityFromChild
      * <p>
      * {@hide}
+     * 来都来了，一起看下吧
      */
     @UnsupportedAppUsage
     public ActivityResult execStartActivity(
@@ -1690,6 +1691,9 @@ public class Instrumentation {
         try {
             intent.migrateExtraStreamToClipData();
             intent.prepareToLeaveProcess(who);
+            //todo-->to next level(来到了这里ATMS.startActivity)
+            //getService==>IActivityTaskManager.startActivity 这是一个IPC调用
+            //todo-->next level is ActivityTaskManagerService.startActivity
             int result = ActivityTaskManager.getService()
                     .startActivity(whoThread, who.getBasePackageName(), intent,
                             intent.resolveTypeIfNeeded(who.getContentResolver()),

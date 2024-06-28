@@ -3177,7 +3177,7 @@ public final class ActivityThread extends ClientTransactionHandler {
 
         ContextImpl appContext = createBaseContextForActivity(r);
         Activity activity = null;
-        try {
+        try {//TODO:类加载器在这里呢
             java.lang.ClassLoader cl = appContext.getClassLoader();
             activity = mInstrumentation.newActivity(
                     cl, component.getClassName(), r.intent);
@@ -3221,6 +3221,7 @@ public final class ActivityThread extends ClientTransactionHandler {
                     r.mPendingRemoveWindowManager = null;
                 }
                 appContext.setOuterContext(activity);
+                //todo-->activity.attach
                 activity.attach(appContext, this, getInstrumentation(), r.token,
                         r.ident, app, r.intent, r.activityInfo, title, r.parent,
                         r.embeddedID, r.lastNonConfigurationInstances, config,
@@ -3239,6 +3240,7 @@ public final class ActivityThread extends ClientTransactionHandler {
                 }
 
                 activity.mCalled = false;
+                //todo-->activity.onCreate
                 if (r.isPersistable()) {
                     mInstrumentation.callActivityOnCreate(activity, r.state, r.persistentState);
                 } else {
@@ -4234,6 +4236,7 @@ public final class ActivityThread extends ClientTransactionHandler {
         mSomeActivitiesChanged = true;
 
         // TODO Push resumeArgs into the activity for consideration
+        // 将Activity 恢复到 onResume 状态
         final ActivityClientRecord r = performResumeActivity(token, finalStateRequest, reason);
         if (r == null) {
             // We didn't actually resume the activity, so skipping any follow-up actions.
@@ -4270,9 +4273,13 @@ public final class ActivityThread extends ClientTransactionHandler {
             }
         }
         if (r.window == null && !a.mFinished && willBeVisible) {
+            // 2.获取在 Activity.attach() 方法中就创建了 PhoneWindow 对象。
             r.window = r.activity.getWindow();
+            // 获取 phonewindow 内的decorView
             View decor = r.window.getDecorView();
+            // 这里使 Decor 不可见。
             decor.setVisibility(View.INVISIBLE);
+            // 3.获取 Activity 中持有的 WindowManager。
             ViewManager wm = a.getWindowManager();
             WindowManager.LayoutParams l = r.window.getAttributes();
             a.mDecor = decor;
@@ -4292,7 +4299,10 @@ public final class ActivityThread extends ClientTransactionHandler {
             }
             if (a.mVisibleFromClient) {
                 if (!a.mWindowAdded) {
+                    //标记为已添加
                     a.mWindowAdded = true;
+                    // 4.将根 View(DecorView)通过 WindowManager 添加到 Window 中。
+                    // 注意这里的 WM == WindowManagerImpl
                     wm.addView(decor, l);
                 } else {
                     // The activity will get a callback for this {@link LayoutParams} change
@@ -4343,6 +4353,7 @@ public final class ActivityThread extends ClientTransactionHandler {
             r.activity.mVisibleFromServer = true;
             mNumVisibleActivities++;
             if (r.activity.mVisibleFromClient) {
+                //置为可见
                 r.activity.makeVisible();
             }
         }

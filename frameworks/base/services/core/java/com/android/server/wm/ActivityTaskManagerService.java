@@ -1009,6 +1009,7 @@ public class ActivityTaskManagerService extends IActivityTaskManager.Stub {
     public final int startActivity(IApplicationThread caller, String callingPackage,
             Intent intent, String resolvedType, IBinder resultTo, String resultWho, int requestCode,
             int startFlags, ProfilerInfo profilerInfo, Bundle bOptions) {
+        //todo-->通过IPC机制，来到了这里，跟下去
         return startActivityAsUser(caller, callingPackage, intent, resolvedType, resultTo,
                 resultWho, requestCode, startFlags, profilerInfo, bOptions,
                 UserHandle.getCallingUserId());
@@ -1032,6 +1033,7 @@ public class ActivityTaskManagerService extends IActivityTaskManager.Stub {
     public int startActivityAsUser(IApplicationThread caller, String callingPackage,
             Intent intent, String resolvedType, IBinder resultTo, String resultWho, int requestCode,
             int startFlags, ProfilerInfo profilerInfo, Bundle bOptions, int userId) {
+        //todo-->to next level
         return startActivityAsUser(caller, callingPackage, intent, resolvedType, resultTo,
                 resultWho, requestCode, startFlags, profilerInfo, bOptions, userId,
                 true /*validateIncomingUser*/);
@@ -1041,12 +1043,17 @@ public class ActivityTaskManagerService extends IActivityTaskManager.Stub {
             Intent intent, String resolvedType, IBinder resultTo, String resultWho, int requestCode,
             int startFlags, ProfilerInfo profilerInfo, Bundle bOptions, int userId,
             boolean validateIncomingUser) {
+        //todo-->to next level
         enforceNotIsolatedCaller("startActivityAsUser");
 
         userId = getActivityStartController().checkTargetUser(userId, validateIncomingUser,
                 Binder.getCallingPid(), Binder.getCallingUid(), "startActivityAsUser");
 
-        // TODO: Switch to user app stacks here.
+        // TODO: Switch to user app stacks here.(在此处切换到用户应用程序堆栈)
+        // 需要解读一下：
+        // ActivityStartController()==>ActivityStartController
+        // obtainStarter()==>ActivityStarter
+        // 最后调用的是 ActivityStarter.execute
         return getActivityStartController().obtainStarter(intent, "startActivityAsUser")
                 .setCaller(caller)
                 .setCallingPackage(callingPackage)
@@ -1057,8 +1064,8 @@ public class ActivityTaskManagerService extends IActivityTaskManager.Stub {
                 .setStartFlags(startFlags)
                 .setProfilerInfo(profilerInfo)
                 .setActivityOptions(bOptions)
-                .setMayWait(userId)
-                .execute();
+                .setMayWait(userId)//注意这里跟进去->代码设置了mayWait = true,会影响后面的代码走向
+                .execute();//最后执行execute
 
     }
 
